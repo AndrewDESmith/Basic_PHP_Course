@@ -4,7 +4,7 @@
 define("YEAR", 2016);
 define("JOB_TITLE", "Teacher");
 define("USE_FULL_NAME", FALSE);
-define("MAX_BADGES", 150000);
+define("MAX_BADGES", 15);
 
 // Invalid constant name
 // define("2LEGIT", "to quit");
@@ -19,12 +19,23 @@ $role = "Teacher";
 
 
 // PHP conditional:
-if( USE_FULL_NAME == TRUE ) {
+if (USE_FULL_NAME == TRUE) {
   // Concatenation of strings with a dot (.)
   $name = $first_name . ' ' . $last_name;
 } else {
   $name = $first_name;
 }
+
+if ($role == "Teacher") {
+  $info = "I am a Teacher at Treehouse";
+} elseif ($role == "Student") {
+  $info = "I am a Student at Treehouse";
+} else {
+  $info = "I am just visiting";
+}
+
+// Array to store CSS class names of social icons:
+$social_icons = array('twitter', 'facebook', 'google');
 
 ?>
 
@@ -44,14 +55,37 @@ if( USE_FULL_NAME == TRUE ) {
       <h1><?php echo $name ?></h1>
       <p><?php echo $location ?></p>
       <hr />
-      <p>Welcome to PHP Basics!</p>
+      <p><?php echo $info; ?></p>
       <hr />
       <ul class="social">
-        <li><a href=""><span class="icon twitter"></span></a></li>
+        <!-- For Each loop in PHP: -->
+        <?php
+          // $icon is a local variable only inside the foreach loop, similar to the convention in Ruby's block syntax:
+          // e.g. fruits.each { |fruit| puts fruit }
+          // Since HTML cannot be inside PHP tags (except for 'echoing' HTML), we keep the forloop open when exiting the php tag to go into HTML:
+          foreach($social_icons as $icon) {
+        ?>
+          <!-- *** The foreach loop (and the PHP script) is still running here, even though we are outside of the PHP tag. *** -->
+          <li><a href=""><span class="icon <?php echo $icon ?>"></span></a></li>
+        <?php
+          // Close the foreach loop here.
+          }
+        ?>
+
       </ul>
     </section>
     <section class="main">
       <!-- <p>Let's Get Started!</p> -->
+
+      <ul>
+        <?php
+          // PHP for loop:
+          for ($counter = 0; $counter <= MAX_BADGES; $counter++) {
+            echo "<li>" . $counter . "</li>";
+          }
+        ?>
+      </ul>
+
       <pre><?php
 
         // $a = 10;
@@ -74,9 +108,9 @@ if( USE_FULL_NAME == TRUE ) {
         $b = TRUE;
 
         // Logical Operators:
-        var_dump( $a and $b );
-        var_dump( $a or $b );
-        var_dump( !$a ); // Not TRUE
+        // var_dump( $a and $b );
+        // var_dump( $a or $b );
+        // var_dump( !$a ); // Not TRUE
 
         // $sum = $a + $b;
         // $diff = $a - $b;
